@@ -35,7 +35,7 @@ How to use:
                     <dependency>
                         <groupId>com.github.edwgiz</groupId>
                         <artifactId>maven-shade-plugin.log4j2-cachefile-transformer</artifactId>
-                        <version>2.1</version>
+                        <version>2.6.1</version>
                     </dependency>
                 </dependencies>
             </plugin>

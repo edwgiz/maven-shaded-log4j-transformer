@@ -5,10 +5,7 @@ import org.apache.logging.log4j.core.config.plugins.processor.PluginCache;
 import org.apache.maven.plugins.shade.relocation.Relocator;
 import org.apache.maven.plugins.shade.resource.ResourceTransformer;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -22,35 +19,31 @@ import static org.apache.logging.log4j.core.config.plugins.processor.PluginProce
 
 public class PluginsCacheFileTransformer implements ResourceTransformer {
 
-    ArrayList<File> tempFiles = new ArrayList<File>();
+    private ArrayList<File> tempFiles = new ArrayList<File>();
 
 
-    @Override
     public boolean canTransformResource(String resource) {
         return resource != null && PLUGIN_CACHE_FILE.equals(resource);
     }
 
 
-    @Override
     public void processResource(String resource, InputStream is, List<Relocator> relocators) throws IOException {
         final File tempFile = File.createTempFile("Log4j2Plugins", "dat");
         FileOutputStream fos = new FileOutputStream(tempFile);
         try {
             IOUtils.copyLarge(is, fos);
         } finally {
-            fos.close();
+            IOUtils.closeQuietly(fos);
         }
         tempFiles.add(tempFile);
     }
 
 
-    @Override
     public boolean hasTransformedResource() {
         return tempFiles.size() > 1;
     }
 
 
-    @Override
     public void modifyOutputStream(JarOutputStream jos) throws IOException {
         try {
             PluginCache aggregator = new PluginCache();
@@ -66,7 +59,7 @@ public class PluginsCacheFileTransformer implements ResourceTransformer {
     }
 
 
-    protected Enumeration<URL> getUrls() throws MalformedURLException {
+    private Enumeration<URL> getUrls() throws MalformedURLException {
         List<URL> urls = new ArrayList<URL>();
         for (File tempFile : tempFiles) {
             final URL url = tempFile.toURI().toURL();
