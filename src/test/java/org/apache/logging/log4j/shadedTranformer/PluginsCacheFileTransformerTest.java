@@ -14,6 +14,7 @@ import java.util.Map;
 import static java.util.Collections.enumeration;
 import static java.util.Collections.singletonList;
 import static org.apache.logging.log4j.core.config.plugins.processor.PluginProcessor.PLUGIN_CACHE_FILE;
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.startsWith;
 import static org.junit.Assert.assertThat;
 
@@ -26,6 +27,8 @@ public class PluginsCacheFileTransformerTest {
         PluginsCacheFileTransformer t = new PluginsCacheFileTransformer();
         final InputStream is = getClass().getClassLoader().getResourceAsStream(PLUGIN_CACHE_FILE);
         t.processResource(PLUGIN_CACHE_FILE, is, null);
+
+        assertThat(t.hasTransformedResource(), is(true));
     }
 
 

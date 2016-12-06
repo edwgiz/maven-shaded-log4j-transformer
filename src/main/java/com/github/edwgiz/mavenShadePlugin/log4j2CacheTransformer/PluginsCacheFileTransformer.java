@@ -46,7 +46,7 @@ public class PluginsCacheFileTransformer implements ResourceTransformer {
 
 
     public boolean hasTransformedResource() {
-        return tempFiles.size() > 1;
+        return tempFiles.size() >= 1;
     }
 
 
