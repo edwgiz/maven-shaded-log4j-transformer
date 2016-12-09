@@ -11,11 +11,14 @@ import org.junit.Test;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import static java.util.Collections.enumeration;
 import static java.util.Collections.singletonList;
 import static org.apache.logging.log4j.core.config.plugins.processor.PluginProcessor.PLUGIN_CACHE_FILE;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 
@@ -28,12 +31,17 @@ public class PluginsCacheFileTransformerTest {
         pluginUrl = PluginsCacheFileTransformerTest.class.getClassLoader().getResource(PLUGIN_CACHE_FILE);
     }
 
+
     @Test
     public void test() throws Exception {
         PluginsCacheFileTransformer t = new PluginsCacheFileTransformer();
         final InputStream is = getClass().getClassLoader().getResourceAsStream(PLUGIN_CACHE_FILE);
         t.processResource(PLUGIN_CACHE_FILE, is, null);
+        assertFalse(t.hasTransformedResource());
 
+        List<Relocator> relocators = new ArrayList<Relocator>();
+        relocators.add(new SimpleRelocator(null, null, null, null));
+        t.processResource(PLUGIN_CACHE_FILE, is, relocators);
         assertTrue(t.hasTransformedResource());
     }
 
