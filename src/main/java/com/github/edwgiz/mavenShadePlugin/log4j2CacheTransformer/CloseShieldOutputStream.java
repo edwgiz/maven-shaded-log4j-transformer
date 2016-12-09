@@ -8,9 +8,9 @@ import java.io.OutputStream;
 
 import static org.apache.commons.io.output.ClosedOutputStream.CLOSED_OUTPUT_STREAM;
 
-public class CloseShieldOutputStream extends ProxyOutputStream {
+final class CloseShieldOutputStream extends ProxyOutputStream {
 
-    public CloseShieldOutputStream(OutputStream out) {
+    CloseShieldOutputStream(OutputStream out) {
         super(out);
     }
 

@@ -20,9 +20,8 @@ import static org.apache.logging.log4j.core.config.plugins.processor.PluginProce
 
 public class PluginsCacheFileTransformer implements ResourceTransformer {
 
-    private ArrayList<File> tempFiles = new ArrayList<File>();
-
-    private List<Relocator> configuredRelocators = new ArrayList<Relocator>();
+    private final ArrayList<File> tempFiles = new ArrayList<File>();
+    private final List<Relocator> relocators = new ArrayList<Relocator>();
 
     public boolean canTransformResource(String resource) {
         return resource != null && PLUGIN_CACHE_FILE.equals(resource);
@@ -40,13 +39,13 @@ public class PluginsCacheFileTransformer implements ResourceTransformer {
         tempFiles.add(tempFile);
 
         if (relocators != null) {
-            configuredRelocators.addAll(relocators);
+            this.relocators.addAll(relocators);
         }
     }
 
 
     public boolean hasTransformedResource() {
-        return tempFiles.size() >= 1;
+        return tempFiles.size() > 1 || (tempFiles.size() > 0 && relocators.size() > 0);
     }
 
 
@@ -55,7 +54,7 @@ public class PluginsCacheFileTransformer implements ResourceTransformer {
             PluginCache aggregator = new PluginCache();
             aggregator.loadCacheFiles(getUrls());
 
-            relocatePlugin(aggregator, configuredRelocators);
+            relocatePlugin(aggregator, relocators);
 
             jos.putNextEntry(new JarEntry(PLUGIN_CACHE_FILE));
             aggregator.writeCache(new CloseShieldOutputStream(jos));
@@ -67,13 +66,13 @@ public class PluginsCacheFileTransformer implements ResourceTransformer {
         }
     }
 
-    public void relocatePlugin(PluginCache aggregator, List<Relocator> configuredRelocators) {
+    void relocatePlugin(PluginCache aggregator, List<Relocator> relocators) {
         for (Map.Entry<String, Map<String, PluginEntry>> categoryEntry : aggregator.getAllCategories().entrySet()) {
             for (Map.Entry<String, PluginEntry> pluginMapEntry : categoryEntry.getValue().entrySet()) {
                 PluginEntry pluginEntry = pluginMapEntry.getValue();
                 String originalClassName = pluginEntry.getClassName();
 
-                Relocator matchingRelocator = findFirstMatchingRelocator(originalClassName, configuredRelocators);
+                Relocator matchingRelocator = findFirstMatchingRelocator(originalClassName, relocators);
 
                 if (matchingRelocator != null) {
                     String newClassName = matchingRelocator.relocateClass(originalClassName);
@@ -83,8 +82,8 @@ public class PluginsCacheFileTransformer implements ResourceTransformer {
         }
     }
 
-    private Relocator findFirstMatchingRelocator(String originalClassName, List<Relocator> configuredRelocators) {
-        for (Relocator relocator : configuredRelocators) {
+    private Relocator findFirstMatchingRelocator(String originalClassName, List<Relocator> relocators) {
+        for (Relocator relocator : relocators) {
             if (relocator.canRelocateClass(originalClassName)) {
                 return relocator;
             }
