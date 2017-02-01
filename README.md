@@ -35,7 +35,7 @@ How to use:
                     <dependency>
                         <groupId>com.github.edwgiz</groupId>
                         <artifactId>maven-shade-plugin.log4j2-cachefile-transformer</artifactId>
-                        <version>2.7</version>
+                        <version>2.8</version>
                     </dependency>
                 </dependencies>
             </plugin>
@@ -53,3 +53,5 @@ How to use:
 
 </project>
 ```
+
+A number of the transformer version (it's 2.8 now) corresponds to the number of the artifacts in `org.apache.logging.log4j` group
