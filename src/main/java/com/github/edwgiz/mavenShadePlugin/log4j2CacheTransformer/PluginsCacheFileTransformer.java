@@ -59,10 +59,12 @@ public class PluginsCacheFileTransformer implements ResourceTransformer {
             jos.putNextEntry(new JarEntry(PLUGIN_CACHE_FILE));
             aggregator.writeCache(new CloseShieldOutputStream(jos));
         } finally {
-            for (File tempFile : tempFiles) {
+            ListIterator<File> it = tempFiles.listIterator();
+            while (it.hasNext()) {
+                File f = it.next();
                 //noinspection ResultOfMethodCallIgnored
-                tempFile.delete();
-                tempFiles.remove(tempFile);
+                f.delete();
+                it.remove();
             }
         }
     }

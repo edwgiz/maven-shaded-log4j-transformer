@@ -54,4 +54,4 @@ How to use:
 </project>
 ```
 
-A number of the transformer version (it's 2.8 now) corresponds to the number of the artifacts in `org.apache.logging.log4j` group
+A number of the transformer version (it's 2.8.1 now) corresponds to the number of the artifacts in `org.apache.logging.log4j` group
