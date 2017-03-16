@@ -62,6 +62,7 @@ public class PluginsCacheFileTransformer implements ResourceTransformer {
             for (File tempFile : tempFiles) {
                 //noinspection ResultOfMethodCallIgnored
                 tempFile.delete();
+                tempFiles.remove(tempFile);
             }
         }
     }
