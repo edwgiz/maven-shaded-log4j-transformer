@@ -1,4 +1,4 @@
-package com.github.edwgiz.mavenShadePlugin.log4j2CacheTransformer;
+package com.github.edwgiz.maven_shade_plugin.log4j2_cache_transformer;
 
 
 import org.apache.commons.io.output.ProxyOutputStream;
@@ -10,7 +10,7 @@ import static org.apache.commons.io.output.ClosedOutputStream.CLOSED_OUTPUT_STRE
 
 final class CloseShieldOutputStream extends ProxyOutputStream {
 
-    CloseShieldOutputStream(OutputStream out) {
+    /* default */ CloseShieldOutputStream(final OutputStream out) {
         super(out);
     }
 
