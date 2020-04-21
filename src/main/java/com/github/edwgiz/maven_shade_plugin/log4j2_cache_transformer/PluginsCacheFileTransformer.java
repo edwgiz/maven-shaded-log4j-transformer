@@ -66,7 +66,8 @@ public class PluginsCacheFileTransformer implements ResourceTransformer {
     @Override
     public void processResource(final String resource,
             final InputStream resourceInput,
-            final List<Relocator> relocators) throws IOException {
+            final List<Relocator> relocators,
+            final long time) throws IOException {
         final Path tempFile = Files.createTempFile("Log4j2Plugins", "dat");
         Files.copy(resourceInput, tempFile, REPLACE_EXISTING);
         tempFiles.add(tempFile);
