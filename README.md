@@ -14,7 +14,7 @@ How to use:
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>2.4.3</version>
+                <version>3.2.3</version>
                 <executions>
                     <execution>
                         <phase>package</phase>
@@ -36,7 +36,7 @@ How to use:
                     <dependency>
                         <groupId>com.github.edwgiz</groupId>
                         <artifactId>maven-shade-plugin.log4j2-cachefile-transformer</artifactId>
-                        <version>2.13.0</version>
+                        <version>2.13.1</version>
                     </dependency>
                 </dependencies>
             </plugin>
@@ -50,6 +50,7 @@ How to use:
 A number of the transformer version corresponds to the number of the artifacts in `org.apache.logging.log4j` group
 
 Below versions are available:
+- 2.13.1
 - 2.13.0, please note that transformer implementation in the `maven-shade-plugin` configuration should be changed if it was already referenced before.
 - 2.8.1
 - 2.8
