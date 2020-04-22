@@ -37,12 +37,12 @@ final class PluginsCacheFileTransformerTest {
         final PluginsCacheFileTransformer transformer = new PluginsCacheFileTransformer();
         try (InputStream log4jCacheFileInputStream = getClass().getClassLoader()
                 .getResourceAsStream(PLUGIN_CACHE_FILE)) {
-            transformer.processResource(PLUGIN_CACHE_FILE, log4jCacheFileInputStream, null);
+            transformer.processResource(PLUGIN_CACHE_FILE, log4jCacheFileInputStream, null, 0L);
             assertFalse(transformer.hasTransformedResource());
 
             final List<Relocator> relocators = new ArrayList<>();
             relocators.add(new SimpleRelocator(null, null, null, null));
-            transformer.processResource(PLUGIN_CACHE_FILE, log4jCacheFileInputStream, relocators);
+            transformer.processResource(PLUGIN_CACHE_FILE, log4jCacheFileInputStream, relocators, 0L);
         }
         assertTrue(transformer.hasTransformedResource());
     }
