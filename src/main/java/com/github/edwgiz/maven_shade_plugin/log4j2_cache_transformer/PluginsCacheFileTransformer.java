@@ -3,7 +3,7 @@ package com.github.edwgiz.maven_shade_plugin.log4j2_cache_transformer;
 import org.apache.logging.log4j.core.config.plugins.processor.PluginCache;
 import org.apache.logging.log4j.core.config.plugins.processor.PluginEntry;
 import org.apache.maven.plugins.shade.relocation.Relocator;
-import org.apache.maven.plugins.shade.resource.ResourceTransformer;
+import org.apache.maven.plugins.shade.resource.ReproducibleResourceTransformer;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -27,7 +27,7 @@ import static org.apache.logging.log4j.core.config.plugins.processor.PluginProce
 /**
  * 'maven-shade-plugin' transformer implementation.
  */
-public class PluginsCacheFileTransformer implements ResourceTransformer {
+public class PluginsCacheFileTransformer implements ReproducibleResourceTransformer {
 
     /**
      * Log4j config files to share across the transformation stages.
@@ -56,11 +56,17 @@ public class PluginsCacheFileTransformer implements ResourceTransformer {
         return PLUGIN_CACHE_FILE.equals(resource);
     }
 
+    @Override
+    @Deprecated
+    public void processResource(String resource, InputStream is, List<Relocator> relocators) throws IOException {
+        // stub
+    }
+
     /**
      * @param resource      ignored parameter
      * @param resourceInput resource input stream to save in temp file
      *                      for next stage
-     * @param relocators    relacator to keep for next stage
+     * @param relocators    relocator to keep for next stage
      * @throws IOException thrown by file writing errors
      */
     @Override
