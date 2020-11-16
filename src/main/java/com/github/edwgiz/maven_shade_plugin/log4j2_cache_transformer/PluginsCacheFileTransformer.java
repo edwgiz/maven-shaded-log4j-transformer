@@ -11,6 +11,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.attribute.FileTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
@@ -37,6 +38,10 @@ public class PluginsCacheFileTransformer implements ReproducibleResourceTransfor
      * {@link Relocator} instances to share across the transformation stages.
      */
     private final List<Relocator> tempRelocators;
+    /**
+     * Store youngest (i.e. largest millisecond) so that we can produce reproducible jar file
+     */
+    private long youngestTime = 0;
 
 
     /**
@@ -77,6 +82,7 @@ public class PluginsCacheFileTransformer implements ReproducibleResourceTransfor
         final Path tempFile = Files.createTempFile("Log4j2Plugins", "dat");
         Files.copy(resourceInput, tempFile, REPLACE_EXISTING);
         tempFiles.add(tempFile);
+        youngestTime = Math.max(youngestTime, time);
 
         if (relocators != null) {
             this.tempRelocators.addAll(relocators);
@@ -109,7 +115,13 @@ public class PluginsCacheFileTransformer implements ReproducibleResourceTransfor
 
             relocatePlugin(tempRelocators, aggregator.getAllCategories());
 
-            jos.putNextEntry(new JarEntry(PLUGIN_CACHE_FILE));
+            final JarEntry jarEntry = new JarEntry(PLUGIN_CACHE_FILE);
+
+            // Set time to youngest timestamp, to ensure reproducible output.
+            final FileTime fileTime = FileTime.fromMillis(youngestTime);
+            jarEntry.setLastModifiedTime(fileTime);
+
+            jos.putNextEntry(jarEntry);
             // prevent the aggregator to close the jar output
             final CloseShieldOutputStream outputStream =
                     new CloseShieldOutputStream(jos);
