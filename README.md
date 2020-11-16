@@ -1,3 +1,5 @@
+[![We recommend IntelliJ IDEA](http://amihaiemil.github.io/images/intellij-idea-recommend.svg)](https://www.jetbrains.com/idea/)
+
 # maven-shaded-log4j-transformer
 Transformer for `maven-shaded-plugin`, that concatenates Log4j2Plugins.dat files 
 in order to provide a workaround for [LOG4J2-673](https://issues.apache.org/jira/browse/LOG4J2-673) and 
@@ -36,7 +38,7 @@ How to use:
                     <dependency>
                         <groupId>com.github.edwgiz</groupId>
                         <artifactId>maven-shade-plugin.log4j2-cachefile-transformer</artifactId>
-                        <version>2.13.3</version>
+                        <version>2.14.0</version>
                     </dependency>
                 </dependencies>
             </plugin>
@@ -50,6 +52,7 @@ How to use:
 A number of the transformer version corresponds to the number of the artifacts in `org.apache.logging.log4j` group
 
 Below versions are available:
+- 2.14.0
 - 2.13.3
 - 2.13.2
 - 2.13.1
