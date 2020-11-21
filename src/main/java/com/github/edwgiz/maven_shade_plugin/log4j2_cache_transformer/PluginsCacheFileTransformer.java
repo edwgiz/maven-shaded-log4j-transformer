@@ -63,7 +63,7 @@ public class PluginsCacheFileTransformer implements ReproducibleResourceTransfor
 
     @Override
     @Deprecated
-    public void processResource(String resource, InputStream is, List<Relocator> relocators) throws IOException {
+    public void processResource(String resource, InputStream is, List<Relocator> relocators) {
         // stub
     }
 

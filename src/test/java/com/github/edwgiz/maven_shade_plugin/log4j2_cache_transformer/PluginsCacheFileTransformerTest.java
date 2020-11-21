@@ -1,5 +1,6 @@
 package com.github.edwgiz.maven_shade_plugin.log4j2_cache_transformer;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.logging.log4j.core.config.plugins.processor.PluginCache;
 import org.apache.logging.log4j.core.config.plugins.processor.PluginEntry;
 import org.apache.maven.plugins.shade.relocation.Relocator;
@@ -13,6 +14,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.jar.JarEntry;
 import java.util.jar.JarInputStream;
@@ -40,7 +42,7 @@ final class PluginsCacheFileTransformerTest {
     @Test
     public void test() throws Exception {
         final PluginsCacheFileTransformer transformer = new PluginsCacheFileTransformer();
-        long expectedYoungestResourceTime = (System.currentTimeMillis() / 1000L) * 1000L;
+        long expectedYoungestResourceTime = 1605922127000L; // Sat Nov 21 2020 01:28:47
         try (InputStream log4jCacheFileInputStream = getClass().getClassLoader()
                 .getResourceAsStream(PLUGIN_CACHE_FILE)) {
             transformer.processResource(PLUGIN_CACHE_FILE, log4jCacheFileInputStream, null, expectedYoungestResourceTime);
@@ -53,11 +55,13 @@ final class PluginsCacheFileTransformerTest {
         }
         assertTrue(transformer.hasTransformedResource());
 
-        assertExpectedYoungestResourceTime(transformer, expectedYoungestResourceTime);
+        assertTransformedCacheFile(transformer, expectedYoungestResourceTime, 1911442937);
     }
 
-    private void assertExpectedYoungestResourceTime(PluginsCacheFileTransformer transformer,
-            long expectedYoungestResourceTime) throws IOException {
+    private void assertTransformedCacheFile(
+            @SuppressWarnings("SameParameterValue") PluginsCacheFileTransformer transformer,
+            @SuppressWarnings("SameParameterValue") long expectedTime,
+            @SuppressWarnings("SameParameterValue") long expectedHash) throws IOException {
         final ByteArrayOutputStream jarBuff = new ByteArrayOutputStream();
         try(final JarOutputStream out = new JarOutputStream(jarBuff)) {
             transformer.modifyOutputStream(out);
@@ -69,7 +73,8 @@ final class PluginsCacheFileTransformerTest {
                 if(jarEntry == null) {
                     fail("No expected resource in the output jar");
                 } else if(jarEntry.getName().equals(PLUGIN_CACHE_FILE)) {
-                    assertEquals(expectedYoungestResourceTime, jarEntry.getTime());
+                    assertEquals(expectedTime, jarEntry.getTime());
+                    assertEquals(expectedHash, Arrays.hashCode(IOUtils.toByteArray(in)));
                     break;
                 }
             }
