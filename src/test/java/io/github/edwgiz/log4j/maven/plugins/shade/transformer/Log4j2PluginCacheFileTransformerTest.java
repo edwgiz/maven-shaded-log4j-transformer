@@ -1,4 +1,4 @@
-package com.github.edwgiz.maven_shade_plugin.log4j2_cache_transformer;
+package io.github.edwgiz.log4j.maven.plugins.shade.transformer;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.logging.log4j.core.config.plugins.processor.PluginCache;
@@ -29,19 +29,19 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 
-final class PluginsCacheFileTransformerTest {
+final class Log4j2PluginCacheFileTransformerTest {
 
     private static URL pluginUrl;
 
     @BeforeAll
     public static void setUp() {
-        pluginUrl = PluginsCacheFileTransformerTest.class.getClassLoader().getResource(PLUGIN_CACHE_FILE);
+        pluginUrl = Log4j2PluginCacheFileTransformerTest.class.getClassLoader().getResource(PLUGIN_CACHE_FILE);
     }
 
 
     @Test
     public void testCanTransformResource() {
-        final PluginsCacheFileTransformer transformer = new PluginsCacheFileTransformer();
+        final Log4j2PluginCacheFileTransformer transformer = new Log4j2PluginCacheFileTransformer();
         assertFalse(transformer.canTransformResource(null));
         assertFalse(transformer.canTransformResource(""));
         assertFalse(transformer.canTransformResource("."));
@@ -53,7 +53,7 @@ final class PluginsCacheFileTransformerTest {
 
     @Test
     public void test() throws Exception {
-        final PluginsCacheFileTransformer transformer = new PluginsCacheFileTransformer();
+        final Log4j2PluginCacheFileTransformer transformer = new Log4j2PluginCacheFileTransformer();
         long expectedYoungestResourceTime = 1605922127000L; // Sat Nov 21 2020 01:28:47
         try (InputStream log4jCacheFileInputStream = getClass().getClassLoader()
                 .getResourceAsStream(PLUGIN_CACHE_FILE)) {
@@ -71,7 +71,7 @@ final class PluginsCacheFileTransformerTest {
     }
 
     private void assertTransformedCacheFile(
-            @SuppressWarnings("SameParameterValue") PluginsCacheFileTransformer transformer,
+            @SuppressWarnings("SameParameterValue") Log4j2PluginCacheFileTransformer transformer,
             @SuppressWarnings("SameParameterValue") long expectedTime,
             @SuppressWarnings("SameParameterValue") long expectedHash) throws IOException {
         final ByteArrayOutputStream jarBuff = new ByteArrayOutputStream();
@@ -104,7 +104,7 @@ final class PluginsCacheFileTransformerTest {
     }
 
     private void testRelocation(final String src, final String pattern, final String target) throws IOException {
-        final PluginsCacheFileTransformer transformer = new PluginsCacheFileTransformer();
+        final Log4j2PluginCacheFileTransformer transformer = new Log4j2PluginCacheFileTransformer();
         final Relocator log4jRelocator = new SimpleRelocator(src, pattern, null, null);
         final PluginCache aggregator = new PluginCache();
         aggregator.loadCacheFiles(enumeration(singletonList(pluginUrl)));

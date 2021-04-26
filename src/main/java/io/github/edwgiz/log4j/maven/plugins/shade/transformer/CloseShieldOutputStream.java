@@ -1,4 +1,4 @@
-package com.github.edwgiz.maven_shade_plugin.log4j2_cache_transformer;
+package io.github.edwgiz.log4j.maven.plugins.shade.transformer;
 
 
 import org.apache.commons.io.output.ProxyOutputStream;

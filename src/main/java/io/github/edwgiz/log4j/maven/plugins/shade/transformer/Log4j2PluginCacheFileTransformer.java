@@ -1,4 +1,4 @@
-package com.github.edwgiz.maven_shade_plugin.log4j2_cache_transformer;
+package io.github.edwgiz.log4j.maven.plugins.shade.transformer;
 
 import org.apache.logging.log4j.core.config.plugins.processor.PluginCache;
 import org.apache.logging.log4j.core.config.plugins.processor.PluginEntry;
@@ -28,7 +28,7 @@ import static org.apache.logging.log4j.core.config.plugins.processor.PluginProce
 /**
  * 'maven-shade-plugin' transformer implementation.
  */
-public class PluginsCacheFileTransformer implements ReproducibleResourceTransformer {
+public class Log4j2PluginCacheFileTransformer implements ReproducibleResourceTransformer {
 
     /**
      * Log4j config files to share across the transformation stages.
@@ -47,7 +47,7 @@ public class PluginsCacheFileTransformer implements ReproducibleResourceTransfor
     /**
      * Default constructor, initializing internal state.
      */
-    public PluginsCacheFileTransformer() {
+    public Log4j2PluginCacheFileTransformer() {
         tempRelocators = new ArrayList<>();
         tempFiles = new ArrayList<>();
     }
