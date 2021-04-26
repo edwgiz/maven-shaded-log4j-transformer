@@ -40,6 +40,18 @@ final class PluginsCacheFileTransformerTest {
 
 
     @Test
+    public void testCanTransformResource() {
+        final PluginsCacheFileTransformer transformer = new PluginsCacheFileTransformer();
+        assertFalse(transformer.canTransformResource(null));
+        assertFalse(transformer.canTransformResource(""));
+        assertFalse(transformer.canTransformResource("."));
+        assertFalse(transformer.canTransformResource("tmp.dat"));
+        assertFalse(transformer.canTransformResource(PLUGIN_CACHE_FILE + ".tmp"));
+        assertFalse(transformer.canTransformResource("tmp/" + PLUGIN_CACHE_FILE));
+        assertTrue(transformer.canTransformResource(PLUGIN_CACHE_FILE));
+    }
+
+    @Test
     public void test() throws Exception {
         final PluginsCacheFileTransformer transformer = new PluginsCacheFileTransformer();
         long expectedYoungestResourceTime = 1605922127000L; // Sat Nov 21 2020 01:28:47
