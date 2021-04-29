@@ -1,4 +1,5 @@
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+&nbsp; [![CodeFactor](https://www.codefactor.io/repository/github/edwgiz/maven-shaded-log4j-transformer/badge/master)](https://www.codefactor.io/repository/github/edwgiz/maven-shaded-log4j-transformer/overview/master)
 &nbsp; [![GitHub build (v2.14.1)](https://img.shields.io/github/workflow/status/edwgiz/maven-shaded-log4j-transformer/Java%20CI/master?&label=Build%20v2.14.1&logo=github)](https://github.com/edwgiz/maven-shaded-log4j-transformer/actions/workflows/maven.yml?query=workflow%3AJava+branch%3Amaster)
 &nbsp; ![Test Coverage](.readme/jacoco.svg)
 &nbsp; [![Latest Maven Central release](https://img.shields.io/maven-central/v/com.github.edwgiz/maven-shade-plugin.log4j2-cachefile-transformer.svg?logo=java)](http://mvnrepository.com/artifact/com.github.edwgiz/maven-shade-plugin.log4j2-cachefile-transformer)
