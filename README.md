@@ -1,6 +1,6 @@
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 &nbsp; [![CodeFactor](https://www.codefactor.io/repository/github/edwgiz/maven-shaded-log4j-transformer/badge/master)](https://www.codefactor.io/repository/github/edwgiz/maven-shaded-log4j-transformer/overview/master)
-&nbsp; [![GitHub build (v2.15.0)](https://img.shields.io/github/workflow/status/edwgiz/maven-shaded-log4j-transformer/Java%20CI/master?&label=Build%20v2.15.0&logo=github)](https://github.com/edwgiz/maven-shaded-log4j-transformer/actions/workflows/maven.yml?query=workflow%3AJava+branch%3Amaster)
+&nbsp; [![GitHub build (v2.16.0)](https://img.shields.io/github/workflow/status/edwgiz/maven-shaded-log4j-transformer/Java%20CI/master?&label=Build%20v2.16.0&logo=github)](https://github.com/edwgiz/maven-shaded-log4j-transformer/actions/workflows/maven.yml?query=workflow%3AJava+branch%3Amaster)
 &nbsp; ![Test Coverage](.readme/jacoco.svg)
 &nbsp; [![Latest Maven Central release](https://img.shields.io/maven-central/v/com.github.edwgiz/maven-shade-plugin.log4j2-cachefile-transformer.svg?logo=java)](http://mvnrepository.com/artifact/com.github.edwgiz/maven-shade-plugin.log4j2-cachefile-transformer)
 &nbsp; [![We recommend IntelliJ IDEA](http://amihaiemil.github.io/images/intellij-idea-recommend.svg)](https://www.jetbrains.com/idea/)
@@ -43,7 +43,7 @@ How to use:
                     <dependency>
                         <groupId>com.github.edwgiz</groupId>
                         <artifactId>maven-shade-plugin.log4j2-cachefile-transformer</artifactId>
-                        <version>2.15.0</version>
+                        <version>2.16.0</version>
                     </dependency>
                 </dependencies>
             </plugin>
@@ -57,6 +57,7 @@ How to use:
 A number of the transformer version corresponds to the number of the artifacts in `org.apache.logging.log4j` group
 
 Below versions are available:
+- 2.16.0
 - 2.15.0
 - 2.14.1
 - 2.14.0
