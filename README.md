@@ -1,6 +1,6 @@
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 &nbsp; [![CodeFactor](https://www.codefactor.io/repository/github/edwgiz/maven-shaded-log4j-transformer/badge/master)](https://www.codefactor.io/repository/github/edwgiz/maven-shaded-log4j-transformer/overview/master)
-&nbsp; [![GitHub build (v2.17.0)](https://img.shields.io/github/workflow/status/edwgiz/maven-shaded-log4j-transformer/Java%20CI/master?&label=Build%20v2.17.0&logo=github)](https://github.com/edwgiz/maven-shaded-log4j-transformer/actions/workflows/maven.yml?query=workflow%3AJava+branch%3Amaster)
+&nbsp; [![GitHub build (v2.17.1)](https://img.shields.io/github/workflow/status/edwgiz/maven-shaded-log4j-transformer/Java%20CI/master?&label=Build%20v2.17.1&logo=github)](https://github.com/edwgiz/maven-shaded-log4j-transformer/actions/workflows/maven.yml?query=workflow%3AJava+branch%3Amaster)
 &nbsp; ![Test Coverage](.readme/jacoco.svg)
 &nbsp; [![Latest Maven Central release](https://img.shields.io/maven-central/v/io.github.edwgiz/log4j-maven-shade-plugin-extensions.svg?logo=java)](http://mvnrepository.com/artifact/io.github.edwgiz/log4j-maven-shade-plugin-extensions)
 &nbsp; [![We recommend IntelliJ IDEA](http://amihaiemil.github.io/images/intellij-idea-recommend.svg)](https://www.jetbrains.com/idea/)
@@ -43,7 +43,7 @@ How to use:
                     <dependency>
                         <groupId>io.github.edwgiz</groupId>
                         <artifactId>log4j-maven-shade-plugin-extensions</artifactId>
-                        <version>2.17.0</version>
+                        <version>2.17.1</version>
                     </dependency>
                 </dependencies>
             </plugin>
@@ -57,7 +57,7 @@ How to use:
 A number of the transformer version corresponds to the number of the artifacts in `org.apache.logging.log4j` group
 
 Below versions are available:
-- 2.17.0, :warning: the prior transformer declaration in your `pom.xml` should be rewritten accordingly above example
+- 2.17.1, :warning: the prior transformer declaration in your `pom.xml` should be rewritten accordingly above example
 - [2.8.1](https://github.com/edwgiz/maven-shaded-log4j-transformer/blob/8d1d3f00d533e367fdb784f2ef529b8e7487b830/README.md)
 - [2.8](https://github.com/edwgiz/maven-shaded-log4j-transformer/blob/acb049022d5a7771d322c689b15db0dedc96f565/README.md)
 - [2.7](https://github.com/edwgiz/maven-shaded-log4j-transformer/blob/2492aed3c6952eedf05d229c01c0ebb45cb10fae/README.md)
