@@ -12,12 +12,7 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.attribute.FileTime;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Enumeration;
-import java.util.List;
-import java.util.ListIterator;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
 import java.util.jar.JarEntry;
 import java.util.jar.JarOutputStream;
@@ -71,14 +66,14 @@ public class Log4j2PluginCacheFileTransformer implements ReproducibleResourceTra
      * @param resource      ignored parameter
      * @param resourceInput resource input stream to save in temp file
      *                      for next stage
-     * @param relocators    relocator to keep for next stage
+     * @param relocators    relocators to keep for next stage
      * @throws IOException thrown by file writing errors
      */
     @Override
     public void processResource(final String resource,
-            final InputStream resourceInput,
-            final List<Relocator> relocators,
-            final long time) throws IOException {
+                                final InputStream resourceInput,
+                                final List<Relocator> relocators,
+                                final long time) throws IOException {
         final Path tempFile = Files.createTempFile("Log4j2Plugins", "dat");
         Files.copy(resourceInput, tempFile, REPLACE_EXISTING);
         tempFiles.add(tempFile);
@@ -112,38 +107,34 @@ public class Log4j2PluginCacheFileTransformer implements ReproducibleResourceTra
         try {
             final PluginCache aggregator = new PluginCache();
             aggregator.loadCacheFiles(getUrls());
-
             relocatePlugin(tempRelocators, aggregator.getAllCategories());
-
-            final JarEntry jarEntry = new JarEntry(PLUGIN_CACHE_FILE);
-
-            // Set time to youngest timestamp, to ensure reproducible output.
-            final FileTime fileTime = FileTime.fromMillis(youngestTime);
-            jarEntry.setLastModifiedTime(fileTime);
-
-            jos.putNextEntry(jarEntry);
+            putJarEntry(jos);
             // prevent the aggregator to close the jar output
             final CloseShieldOutputStream outputStream =
                     new CloseShieldOutputStream(jos);
             aggregator.writeCache(outputStream);
         } finally {
-            final ListIterator<Path> pathIterator = tempFiles.listIterator();
-            while (pathIterator.hasNext()) {
-                final Path path = pathIterator.next();
-                Files.deleteIfExists(path);
-                pathIterator.remove();
-            }
+            deleteTempFiles();
         }
+    }
+
+    private Enumeration<URL> getUrls() throws MalformedURLException {
+        final List<URL> urls = new ArrayList<>();
+        for (final Path tempFile : tempFiles) {
+            final URL url = tempFile.toUri().toURL();
+            urls.add(url);
+        }
+        return Collections.enumeration(urls);
     }
 
     /**
      * Applies the given {@code relocators} to the {@code aggregator}.
      *
-     * @param relocators relocators.
-     * @param aggregatorCategories all categories of of the aggregator
+     * @param relocators           relocators.
+     * @param aggregatorCategories all categories of the aggregator
      */
     /* default */ void relocatePlugin(final List<Relocator> relocators,
-            Map<String, Map<String, PluginEntry>> aggregatorCategories) {
+                                      Map<String, Map<String, PluginEntry>> aggregatorCategories) {
         for (final Entry<String, Map<String, PluginEntry>> categoryEntry
                 : aggregatorCategories.entrySet()) {
             for (final Entry<String, PluginEntry> pluginMapEntry
@@ -164,23 +155,33 @@ public class Log4j2PluginCacheFileTransformer implements ReproducibleResourceTra
     }
 
     private Relocator findFirstMatchingRelocator(final String originalClassName,
-            final List<Relocator> relocators) {
+                                                 final List<Relocator> relocators) {
         Relocator result = null;
         for (final Relocator relocator : relocators) {
             if (relocator.canRelocateClass(originalClassName)) {
                 result = relocator;
+                break;
             }
         }
         return result;
     }
 
+    private void putJarEntry(JarOutputStream jos) throws IOException {
+        final JarEntry jarEntry = new JarEntry(PLUGIN_CACHE_FILE);
 
-    private Enumeration<URL> getUrls() throws MalformedURLException {
-        final List<URL> urls = new ArrayList<>();
-        for (final Path tempFile : tempFiles) {
-            final URL url = tempFile.toUri().toURL();
-            urls.add(url);
+        // Set time to youngest timestamp, to ensure reproducible output.
+        final FileTime fileTime = FileTime.fromMillis(youngestTime);
+        jarEntry.setLastModifiedTime(fileTime);
+
+        jos.putNextEntry(jarEntry);
+    }
+
+    private void deleteTempFiles() throws IOException {
+        final ListIterator<Path> pathIterator = tempFiles.listIterator();
+        while (pathIterator.hasNext()) {
+            final Path path = pathIterator.next();
+            Files.deleteIfExists(path);
+            pathIterator.remove();
         }
-        return Collections.enumeration(urls);
     }
 }
