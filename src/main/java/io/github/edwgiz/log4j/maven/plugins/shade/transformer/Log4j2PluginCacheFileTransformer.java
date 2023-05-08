@@ -85,13 +85,16 @@ public class Log4j2PluginCacheFileTransformer implements ReproducibleResourceTra
     }
 
     /**
-     * @return true when several log4j-cache-files should be merged
-     * or at least one relocated.
+     * Even a single positive outcome by
+     * {@link #canTransformResource(String)} means the Shaded
+     * plugin will not handle the respective resource automatically,
+     * so the extension have to handle the single dat file.
+     *
+     * @return true if any dat file collected
      */
     @Override
     public boolean hasTransformedResource() {
-        return tempFiles.size() > 1
-                || !tempFiles.isEmpty() && !tempRelocators.isEmpty();
+        return tempFiles.size() > 0;
     }
 
 

@@ -23,10 +23,7 @@ import java.util.jar.JarOutputStream;
 import static java.util.Collections.enumeration;
 import static java.util.Collections.singletonList;
 import static org.apache.logging.log4j.core.config.plugins.processor.PluginProcessor.PLUGIN_CACHE_FILE;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.*;
 
 
 final class Log4j2PluginCacheFileTransformerTest {
@@ -54,12 +51,14 @@ final class Log4j2PluginCacheFileTransformerTest {
     @Test
     public void test() throws Exception {
         final Log4j2PluginCacheFileTransformer transformer = new Log4j2PluginCacheFileTransformer();
+        assertFalse(transformer.hasTransformedResource());
+
         long expectedYoungestResourceTime = 1605922127000L; // Sat Nov 21 2020 01:28:47
         try (InputStream log4jCacheFileInputStream = getClass().getClassLoader()
                 .getResourceAsStream(PLUGIN_CACHE_FILE)) {
             transformer.processResource(PLUGIN_CACHE_FILE, log4jCacheFileInputStream, null, expectedYoungestResourceTime);
         }
-        assertFalse(transformer.hasTransformedResource());
+        assertTrue(transformer.hasTransformedResource());
 
         try (InputStream log4jCacheFileInputStream = getClass().getClassLoader()
                 .getResourceAsStream(PLUGIN_CACHE_FILE)) {
