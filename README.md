@@ -3,7 +3,8 @@
 # maven-shaded-log4j-transformer
 :warning: The transformer has become an official Log4J module
 
-:warning: All existing and future users are recommended to switch to the successor project, please note [new artifact documentation](https://logging.apache.org/log4j/transform/latest/#log4j-plugin-cache-transformer)
+:warning: All existing and future users are recommended to switch to the successor project, please note
+[new artifact documentation](https://logging.apache.org/log4j/transform/log4j-transform-maven-shade-plugin-extensions.html)
 
 :warning: Its future development will continue in repo [log4j-transform-maven-shade-plugin-extensions](https://github.com/apache/logging-log4j-transform/tree/main/log4j-transform-maven-shade-plugin-extensions)
 
